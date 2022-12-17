@@ -1,6 +1,7 @@
 const {Router} = require("express");
 const { ProductModel } = require("../models/Product.model");
 
+
 const productsController = Router();
 
 productsController.get("/", async(req,res) => {
@@ -9,12 +10,17 @@ productsController.get("/", async(req,res) => {
 })
 
 productsController.post("/add", async(req,res) => {
-    const {title,qunatity, priority, description} = req.body;
+    const {company,postedAt, location, city, role,level, contract,position, language} = req.body;
     const product = new ProductModel({
-        title,
-        qunatity,
-        priority,
-        description
+        company,
+        postedAt,
+        location,
+        city,
+        role,
+        level,
+        contract,
+        position,
+        language
     })
     try{
         await product.save();
@@ -26,16 +32,7 @@ productsController.post("/add", async(req,res) => {
     }
 })
 
-productsController.delete("/delete/:productId", async (req,res) => {
-    const {productId} = req.params
-    const deletedProduct = await ProductModel.findByIdAndDelete({_id: productId, userId: req.body.userId});
-    if(deletedProduct){
-        res.send("deleted")
-    }
-    else{
-        res.send("can't delete")
-    }
-})
+
 
 
 module.exports = {productsController}   

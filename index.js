@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require("cors")
 const {connection} = require('./config/db');
+const { productsController } = require('./routes/product.routes');
 const PORT = process.env.PORT;
 require("dotenv").config();
 const app = express();
@@ -12,10 +13,9 @@ app.get("/", (req,res) => {
     res.send('Hello')
 })
 
-const {productsController} = require("./routes/product.routes")
 app.use('/products', productsController);
 
-app.listen(8000, async() => {
+app.listen(8080, async() => {
     try{
         await connection
         console.log("Connection to DB successfully")
@@ -24,5 +24,5 @@ app.listen(8000, async() => {
         console.log("Error connecting to DB")
         console.log(err)
     }
-    console.log(`Listening on 8000`)
+    console.log(`Listening on 8080`)
 })
